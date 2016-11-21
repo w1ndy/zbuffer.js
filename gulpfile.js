@@ -25,23 +25,30 @@ gulp.task('bundle', ['compile'], () => {
 gulp.task('server', () => {
     return plugins.connect.server({
         root: '.',
-        livereload: true
+        livereload: true,
+        host: '0.0.0.0'
     });
 });
 
 gulp.task('reload-script', ['bundle'], () => {
-    return gulp.src('./*.js')
+    return gulp.src('./zbuffer.js')
         .pipe(plugins.connect.reload());
 });
 
 gulp.task('reload-html', () => {
-    return gulp.src('./*.html')
+    return gulp.src(['*.html', 'templates/*.html'])
+        .pipe(plugins.connect.reload());
+});
+
+gulp.task('reload-style', () => {
+    return gulp.src('stylesheets/**/*.css')
         .pipe(plugins.connect.reload());
 });
 
 gulp.task('watch', () => {
-    gulp.watch('src/**/*', ['reload-script']);
-    gulp.watch('*.html', ['reload-html']);
+    gulp.watch('src/**/*.ts', ['reload-script']);
+    gulp.watch(['*.html', 'templates/*.html'], ['reload-html']);
+    gulp.watch('stylesheets/**/*.css', ['reload-style']);
 });
 
 gulp.task('default', (done) => {

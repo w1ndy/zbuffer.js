@@ -1,7 +1,13 @@
 {
     "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "moduleResolution": "node",
         "noImplicitAny": true,
-        "rootDir": "src/"
+        "rootDir": "src/",
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "pretty": true
     },
     "include": [
         "src/**/*"

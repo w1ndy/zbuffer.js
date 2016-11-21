@@ -1,0 +1,23 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    background-color: #2C3E50;
+    color: white;
+}
+
+.nav .logo {
+    flex: 0 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.nav .title {
+    display: flex;
+    flex: auto;
+    align-items: center;
+    font-weight: 700;
+    font-size: 20px;
+}
