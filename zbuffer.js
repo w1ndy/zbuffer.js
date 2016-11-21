@@ -1,0 +1,1 @@
+System.registerDynamic("dist/index.js",[],!1,function(e,t,l){var i=System.get("@@global-helpers").prepareGlobal(l.id,null,null);return function(e){document.write("Hello TypeScript!")}(this),i()});

@@ -1,0 +1,37 @@
+{
+  "name": "zbuffer.js",
+  "version": "1.0.0",
+  "description": "Z-buffer algorithm in JavaScript",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"tsc -w\" \"lite-server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w1ndy/zbuffer.js.git"
+  },
+  "author": "Charles Weng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/w1ndy/zbuffer.js/issues"
+  },
+  "homepage": "https://github.com/w1ndy/zbuffer.js#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-systemjs-builder": "^0.15.0",
+    "gulp-typescript": "^3.1.3",
+    "gulp-uglify": "^2.0.0",
+    "run-sequence": "^1.2.2",
+    "typescript": "^2.0.10",
+    "typings": "^2.0.0",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
+  },
+  "dependencies": {
+    "systemjs": "^0.19.41"
+  }
+}
