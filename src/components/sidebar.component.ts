@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { ModelDesc } from '../types/model.type';
 
 @Component({
     selector: 'sidebar',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
         'stylesheets/sidebar.css'
     ]
 })
-export class SidebarComponent {}
+export class SidebarComponent implements OnInit {
+    selectedModel: ModelDesc = null;
+    model: ModelDesc[] = null;
+
+    ngOnInit() {
+
+    }
+}
