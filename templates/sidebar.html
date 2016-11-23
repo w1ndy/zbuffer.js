@@ -1,10 +1,10 @@
 <div class="sidebar">
   <div ngbDropdown class="d-inline-block">
     <button class="btn btn-secondary" id="dropdownMenu1" ngbDropdownToggle>
-      {{selectedModel ? selectedModel.name : 'Select A Model'}}
+      <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i> {{selectedModel ? selectedModel.name : 'Select A Model'}}
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <button *ngFor="let m of models" class="dropdown-item">
+      <button *ngFor="let m of models" (click)="loadModel(m)" class="dropdown-item">
         {{m.name}}
       </button>
     </div>

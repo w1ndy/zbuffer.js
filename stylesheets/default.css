@@ -20,5 +20,11 @@ body {
     display: flex;
     flex: 0 0 260px;
     background-color: #ECF0F1;
+    border-top: none;
     border-right: 1px solid #BDC3C7;
+}
+
+.appview view {
+    display: flex;
+    flex: 1 0;
 }

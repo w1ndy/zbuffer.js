@@ -6,6 +6,7 @@
         "noImplicitAny": true,
         "rootDir": "src/",
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "removeComments": true,
         "pretty": true
     },

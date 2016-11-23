@@ -10,16 +10,17 @@ const tsProject = plugins.typescript.createProject('tsconfig.json');
 
 gulp.task('compile', () => {
     return gulp.src('src/**/*.ts')
+        .pipe(plugins.sourcemaps.init())
         .pipe(tsProject()).js
+        .pipe(plugins.sourcemaps.write('./'))
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('bundle', ['compile'], () => {
     return plugins.systemjsBuilder('./', './system.config.js')
-        .bundle('[./dist/**/*.js]')
-        .pipe(minifier({}, uglifyjs))
-        .pipe(plugins.rename('zbuffer.js'))
-        .pipe(gulp.dest('./'))
+        .bundle('[./dist/**/*.js]', 'zbuffer.js', { minify: true, sourceMaps: true, sourceMapContents: true })
+        // .pipe(minifier({}, uglifyjs))
+        .pipe(gulp.dest('./'));
 });
 
 gulp.task('server', () => {

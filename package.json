@@ -43,6 +43,8 @@
     "bootstrap": "^4.0.0-alpha.5",
     "flat-ui": "^2.1.1",
     "font-awesome": "^4.7.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-systemjs-builder": "git+https://github.com/w1ndy/gulp-systemjs-builder.git",
     "jquery": "^3.1.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.0-rc.4",
