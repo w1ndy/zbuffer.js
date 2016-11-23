@@ -1,5 +1,8 @@
 import { Component, Directive, ViewChild, AfterViewInit, ElementRef, Renderer, HostListener } from '@angular/core';
 
+import { Vec4, Mat4, buildProjectionMatrix, buildViewMatrix } from '../types/linalg.type';
+import { Camera } from '../types/view.type';
+
 @Directive({
     selector: '[view-canvas]'
 })
@@ -8,6 +11,15 @@ export class ViewCanvasDirective {
     private ctx: CanvasRenderingContext2D = null;
     private width: number = 0;
     private height: number = 0;
+
+    private pMatrix: Mat4 = null;
+    private pvMatrix: Mat4 = null;
+
+    private camera: Camera = {
+        eye: new Vec4(-1.8, -1.8, 0.6),
+        at: new Vec4(0., 0., 0.6),
+        up: new Vec4(0., 0., 1.)
+    };
 
     private zbuffer: Float32Array = null;
 
@@ -19,12 +31,33 @@ export class ViewCanvasDirective {
 
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(0, 0, this.width, this.height);
+
+        this.resetMatrices();
     };
 
+    resetMatrices(): void {
+        this.pMatrix = buildProjectionMatrix(
+            70.,
+            this.height ? this.width / this.height : this.width,
+            1., 1000.);
+        let v = buildViewMatrix(
+            this.camera.eye, this.camera.at, this.camera.up);
+        this.pvMatrix = this.pMatrix.mul(buildViewMatrix(
+            this.camera.eye, this.camera.at, this.camera.up));
+        console.dir(this.pMatrix);
+        console.dir(v);
+        console.dir(this.pvMatrix);
+    }
+
+    private resizeTimeout: number;
     @HostListener('window:resize')
     onResize() {
-        this.width = this.canvas.clientWidth;
-        this.height = this.canvas.clientHeight;
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+            this.width = this.canvas.clientWidth;
+            this.height = this.canvas.clientHeight;
+            this.resetMatrices();
+        }, 100);
     }
 }
 
