@@ -27,8 +27,8 @@ export class ViewCanvasDirective {
     private pvMatrix: Mat4 = null;
 
     private camera: Camera = {
-        eye: new Vec4(18, 18, 6),
-        at: new Vec4(0., 0., 6),
+        eye: new Vec4(1.8, 1.8, -.5),
+        at: new Vec4(0., 0., -.5),
         up: new Vec4(0., 0., -1.)
     };
 
@@ -50,25 +50,19 @@ export class ViewCanvasDirective {
         this.pMatrix = buildProjectionMatrix(
             70.,
             this.height ? this.width / this.height : this.width,
-            1., 1000.);
+            1., 2.);
         this.pvMatrix = this.pMatrix.mul(buildViewMatrix(
             this.camera.eye, this.camera.at, this.camera.up));
         this.onModelUpdated(this.inputMesh);
     }
     x(_x: number): number {
         // console.log('x', _x + 0.5 * this.width);
-        return (this.width * _x + 0.5 * this.width);
-    }
-    _x(_x: number): number {
-        return _x + 0.5 * this.width;
+        return (0.3 * this.width * _x + 0.5 * this.width);
     }
 
     y(_y: number): number {
         // console.log('y', _y + 0.5 * this.height);
-        return (this.height * _y + 0.5 * this.height);
-    }
-    _y(_y: number): number {
-        return _y + 0.5 * this.height;
+        return (0.3 * this.height * _y + 0.5 * this.height);
     }
 
     onModelUpdated(m: Model): void {

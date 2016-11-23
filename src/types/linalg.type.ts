@@ -91,7 +91,7 @@ export class Mat4 {
 export function buildProjectionMatrix(
         fovy: number, aspect: number, near: number, far: number): Mat4 {
     const halfH = Math.tan(fovy / 180. * Math.PI * 0.5) * near,
-          halfW = aspect * halfH
+          halfW = aspect * halfH;
     return new Mat4(
         near / halfW, 0., 0., 0.,
         0., near / halfH, 0., 0.,
