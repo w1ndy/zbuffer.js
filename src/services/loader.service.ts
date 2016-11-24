@@ -30,18 +30,18 @@ export class LoaderService {
     loadModel(desc: ModelDesc): Observable<Model> {
         return this.http.get(desc.path)
                 .map((resp: Response) => {
-                    const m = this.processModel(resp.text());
+                    const m = this.processModel(desc, resp.text());
                     this.modelLoadedSource.next(m);
                     return m;
                 })
                 .catch(this.handleError);
     }
 
-    processModel(data: string): Model {
-        let m: Model = { vertices: [], faces: [] };
-        for (let l of data.split('\n')) {
+    processModel(desc: ModelDesc, data: string): Model {
+        let m: Model = { vertices: [], faces: [], desc: desc };
+        for (let l of data.split(/[\r]{0,1}\n/)) {
             if (!l.length) continue;
-            const cmd = l.split(' ');
+            const cmd = l.split(/\s+/);
             if (cmd.length < 4) continue;
             switch (cmd[0]) {
                 case 'v':

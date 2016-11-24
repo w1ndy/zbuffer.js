@@ -1,3 +1,4 @@
 [
-    { "name": "Body", "path": "data/body.obj" }
+    { "name": "Body", "path": "data/body.obj" },
+    { "name": "Cube", "path": "data/cube.obj" }
 ]

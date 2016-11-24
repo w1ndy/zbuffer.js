@@ -5,10 +5,15 @@ export class Vec4 {
         this.d[0] = x; this.d[1] = y, this.d[2] = z; this.d[3] = w;
     }
 
-    x(): number { return this.d[0]; }
-    y(): number { return this.d[1]; }
-    z(): number { return this.d[2]; }
-    w(): number { return this.d[3]; }
+    get x(): number { return this.d[0]; }
+    get y(): number { return this.d[1]; }
+    get z(): number { return this.d[2]; }
+    get w(): number { return this.d[3]; }
+
+    set x(x: number) { this.d[0] = x; }
+    set y(y: number) { this.d[1] = y; }
+    set z(z: number) { this.d[2] = z; }
+    set w(w: number) { this.d[3] = w; }
 
     sub(v: Vec4): Vec4 {
         return new Vec4(
@@ -75,6 +80,12 @@ export class Mat4 {
         for (let i = 0; i < 4; i++)
             for (let j = 0; j < 4; j++)
                 r.d[i] += this.d[i][j] * v.d[j];
+        if (Math.abs(r.d[3]) > 1e-6) {
+            r.d[0] /= r.d[3];
+            r.d[1] /= r.d[3];
+            r.d[2] /= r.d[3];
+            r.d[3] = 1.;
+        }
         return r;
     }
 
@@ -92,6 +103,7 @@ export function buildProjectionMatrix(
         fovy: number, aspect: number, near: number, far: number): Mat4 {
     const halfH = Math.tan(fovy / 180. * Math.PI * 0.5) * near,
           halfW = aspect * halfH;
+    console.log(2*halfW, 2*halfH);
     return new Mat4(
         near / halfW, 0., 0., 0.,
         0., near / halfH, 0., 0.,

@@ -14,4 +14,5 @@ export interface IndexedFace {
 export interface Model {
     vertices: Vec4[];
     faces: IndexedFace[];
+    desc: ModelDesc;
 }

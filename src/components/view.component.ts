@@ -19,6 +19,8 @@ export class ViewCanvasDirective {
     private ctx: CanvasRenderingContext2D = null;
     private width: number = 0;
     private height: number = 0;
+    private scaleX: number = 0;
+    private scaleY: number = 0;
 
     private inputMesh: Model = null;
     private mesh: Model = null;
@@ -27,9 +29,9 @@ export class ViewCanvasDirective {
     private pvMatrix: Mat4 = null;
 
     private camera: Camera = {
-        eye: new Vec4(1.8, 1.8, -.5),
-        at: new Vec4(0., 0., -.5),
-        up: new Vec4(0., 0., -1.)
+        eye: new Vec4(10, 10, 10),
+        at: new Vec4(0., 0., 0),
+        up: new Vec4(0., 1, 0)
     };
 
     private zbuffer: Float32Array = null;
@@ -46,23 +48,26 @@ export class ViewCanvasDirective {
     };
 
     resetMatrices(): void {
-        console.log('aspect',this.height ? this.width / this.height : this.width);
+        const fovy = 60., near = 1, far = 5.,
+              aspect = this.height ? this.width / this.height : this.width,
+              halfH = Math.tan(fovy / 180. * Math.PI * 0.5) * near,
+              scale = this.height * 0.5 / halfH;
         this.pMatrix = buildProjectionMatrix(
-            70.,
-            this.height ? this.width / this.height : this.width,
-            1., 2.);
+            fovy, aspect, near, far);
+        console.log(scale);
+        this.scaleX = scale * aspect;
+        this.scaleY = scale;
         this.pvMatrix = this.pMatrix.mul(buildViewMatrix(
             this.camera.eye, this.camera.at, this.camera.up));
         this.onModelUpdated(this.inputMesh);
     }
+
     x(_x: number): number {
-        // console.log('x', _x + 0.5 * this.width);
-        return (0.3 * this.width * _x + 0.5 * this.width);
+        return (this.scaleX * _x + 0.5 * this.width);
     }
 
     y(_y: number): number {
-        // console.log('y', _y + 0.5 * this.height);
-        return (0.3 * this.height * _y + 0.5 * this.height);
+        return (this.scaleY * _y + 0.5 * this.height);
     }
 
     onModelUpdated(m: Model): void {
@@ -72,42 +77,43 @@ export class ViewCanvasDirective {
             this.mesh = null;
             return;
         }
-        this.mesh = { vertices: [], faces: m.faces };
+        this.mesh = { vertices: [], faces: m.faces, desc: m.desc };
         this.ctx.fillStyle = 'white';
         let maxx = -Infinity, minx = Infinity, maxy = -Infinity, miny = Infinity;
         for (let v of m.vertices) {
             let pv = this.pvMatrix.apply(v);
-            maxx = Math.max(maxx, pv.x());
-            minx = Math.min(minx, pv.x());
-            maxy = Math.max(maxy, pv.y());
-            miny = Math.min(miny, pv.y());
+            console.log(pv.w);
+            maxx = Math.max(maxx, pv.x);
+            minx = Math.min(minx, pv.x);
+            maxy = Math.max(maxy, pv.y);
+            miny = Math.min(miny, pv.y);
             this.mesh.vertices.push(this.pvMatrix.apply(v));
         }
         console.log(maxx, minx, maxy, miny);
         for (let f of m.faces) {
             this.ctx.beginPath();
             this.ctx.moveTo(
-                this.x(this.mesh.vertices[f.v1].x()),
-                this.y(this.mesh.vertices[f.v1].y()));
+                this.x(this.mesh.vertices[f.v1].x),
+                this.y(this.mesh.vertices[f.v1].y));
             this.ctx.lineTo(
-                this.x(this.mesh.vertices[f.v2].x()),
-                this.y(this.mesh.vertices[f.v2].y()));
+                this.x(this.mesh.vertices[f.v2].x),
+                this.y(this.mesh.vertices[f.v2].y));
             this.ctx.lineTo(
-                this.x(this.mesh.vertices[f.v3].x()),
-                this.y(this.mesh.vertices[f.v3].y()));
+                this.x(this.mesh.vertices[f.v3].x),
+                this.y(this.mesh.vertices[f.v3].y));
             this.ctx.closePath();
             this.ctx.fill();
         }
         this.ctx.beginPath();
         console.log(
-                this.x(this.mesh.vertices[0].x()),
-                this.y(this.mesh.vertices[0].y()));
+                this.x(this.mesh.vertices[0].x),
+                this.y(this.mesh.vertices[0].y));
         console.log(
-                this.x(this.mesh.vertices[1].x()),
-                this.y(this.mesh.vertices[1].y()));
+                this.x(this.mesh.vertices[1].x),
+                this.y(this.mesh.vertices[1].y));
         console.log(
-                this.x(this.mesh.vertices[2].x()),
-                this.y(this.mesh.vertices[2].y()));
+                this.x(this.mesh.vertices[2].x),
+                this.y(this.mesh.vertices[2].y));
         console.log('mesh updated');
         console.dir(this.mesh.vertices);
     }
