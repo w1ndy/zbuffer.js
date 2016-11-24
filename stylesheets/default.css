@@ -18,7 +18,7 @@ body {
 
 .appview sidebar {
     display: flex;
-    flex: 0 0 260px;
+    flex: 0 0 320px;
     background-color: #ECF0F1;
     border-top: none;
     border-right: 1px solid #BDC3C7;

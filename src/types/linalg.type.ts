@@ -101,12 +101,10 @@ export class Mat4 {
 
 export function buildProjectionMatrix(
         fovy: number, aspect: number, near: number, far: number): Mat4 {
-    const halfH = Math.tan(fovy / 180. * Math.PI * 0.5) * near,
-          halfW = aspect * halfH;
-    console.log(2*halfW, 2*halfH);
+    const f = 1 / Math.tan(fovy / 180. * Math.PI * 0.5);
     return new Mat4(
-        near / halfW, 0., 0., 0.,
-        0., near / halfH, 0., 0.,
+        f / aspect, 0., 0., 0.,
+        0., f, 0., 0.,
         0., 0., (far + near) / (near - far), 2. * far * near / (near - far),
         0., 0., -1., 0.);
 }
@@ -120,4 +118,12 @@ export function buildViewMatrix(eye: Vec4, at: Vec4, up: Vec4): Mat4 {
         _up.d[0], _up.d[1], _up.d[2], -_up.dot(eye),
         -_dir.d[0], -_dir.d[1], -_dir.d[2], _dir.dot(eye),
         0., 0., 0., 1.);
+}
+
+export function buildViewportMatrix(width: number, height: number): Mat4 {
+    return new Mat4(
+        0.5 * width, 0, 0, 0.5 * width,
+        0, 0.5 * height, 0, 0.5 * height,
+        0, 0, 1, 0
+        0, 0, 0, 1);
 }

@@ -38,7 +38,15 @@ export class LoaderService {
     }
 
     loadModelFromBuffer(data: string): Model {
-        const desc: ModelDesc = { name: 'User-Loaded Model', path: 'Local' },
+        const desc: ModelDesc = {
+                    name: 'User-Loaded Model',
+                    path: 'Local',
+                    defaultCamera: {
+                        eye: [3, 3, 3],
+                        at: [0, 0, 0],
+                        up: [0, 1, 0]
+                    }
+              },
               m = this.processModel(desc, data);
         this.modelLoadedSource.next(m);
         return m;

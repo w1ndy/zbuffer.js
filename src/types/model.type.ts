@@ -1,8 +1,15 @@
 import { Vec4 } from './linalg.type';
 
+export interface NativeCamera {
+    eye: number[],
+    at: number[],
+    up: number[]
+}
+
 export interface ModelDesc {
     name: string;
     path: string;
+    defaultCamera: NativeCamera;
 }
 
 export interface IndexedFace {

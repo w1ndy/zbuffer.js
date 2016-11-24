@@ -5,3 +5,10 @@ export interface Camera {
     at: Vec4,
     up: Vec4
 }
+
+export interface BoundingRect {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+}
