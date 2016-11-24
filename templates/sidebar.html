@@ -1,5 +1,5 @@
 <div class="sidebar">
-  <div ngbDropdown class="d-inline-block">
+  <div ngbDropdown class="d-inline-block data-selector">
     <button class="btn btn-secondary" id="dropdownMenu1" ngbDropdownToggle>
       <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i> {{selectedModel ? selectedModel.name : 'Select A Model'}}
     </button>
@@ -9,4 +9,11 @@
       </button>
     </div>
   </div>
+  <div class="separator">
+    OR
+  </div>
+  <button class="btn btn-secondary data-upload" type="button" (click)="finput.click()">
+    Upload a OBJ
+  </button>
+  <input uploader #finput type="file" style="display:none;">
 </div>

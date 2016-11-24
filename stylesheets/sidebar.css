@@ -12,3 +12,16 @@
     position: relative;
     width: 100%;
 }
+
+.data-selector .dropdown-menu {
+    min-width: 100%;
+}
+
+.separator {
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    text-shadow: 0 0 1px #aaa;
+}

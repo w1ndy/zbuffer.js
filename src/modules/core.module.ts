@@ -5,7 +5,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 
 import { NavbarComponent } from '../components/navbar.component';
 import { AppComponent } from '../components/app.component';
-import { SidebarComponent } from '../components/sidebar.component';
+import { SidebarComponent, SidebarUploaderDirective } from '../components/sidebar.component';
 import { ViewComponent, ViewCanvasDirective } from '../components/view.component';
 
 import { LoaderService } from '../services/loader.service';
@@ -21,6 +21,7 @@ import { LoaderService } from '../services/loader.service';
         AppComponent,
         NavbarComponent,
         SidebarComponent,
+        SidebarUploaderDirective,
         ViewComponent,
         ViewCanvasDirective
     ],

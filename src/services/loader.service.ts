@@ -37,6 +37,13 @@ export class LoaderService {
                 .catch(this.handleError);
     }
 
+    loadModelFromBuffer(data: string): Model {
+        const desc: ModelDesc = { name: 'User-Loaded Model', path: 'Local' },
+              m = this.processModel(desc, data);
+        this.modelLoadedSource.next(m);
+        return m;
+    }
+
     processModel(desc: ModelDesc, data: string): Model {
         let m: Model = { vertices: [], faces: [], desc: desc };
         for (let l of data.split(/[\r]{0,1}\n/)) {

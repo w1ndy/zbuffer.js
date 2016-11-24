@@ -79,17 +79,8 @@ export class ViewCanvasDirective {
         }
         this.mesh = { vertices: [], faces: m.faces, desc: m.desc };
         this.ctx.fillStyle = 'white';
-        let maxx = -Infinity, minx = Infinity, maxy = -Infinity, miny = Infinity;
-        for (let v of m.vertices) {
-            let pv = this.pvMatrix.apply(v);
-            console.log(pv.w);
-            maxx = Math.max(maxx, pv.x);
-            minx = Math.min(minx, pv.x);
-            maxy = Math.max(maxy, pv.y);
-            miny = Math.min(miny, pv.y);
+        for (let v of m.vertices)
             this.mesh.vertices.push(this.pvMatrix.apply(v));
-        }
-        console.log(maxx, minx, maxy, miny);
         for (let f of m.faces) {
             this.ctx.beginPath();
             this.ctx.moveTo(
@@ -104,18 +95,7 @@ export class ViewCanvasDirective {
             this.ctx.closePath();
             this.ctx.fill();
         }
-        this.ctx.beginPath();
-        console.log(
-                this.x(this.mesh.vertices[0].x),
-                this.y(this.mesh.vertices[0].y));
-        console.log(
-                this.x(this.mesh.vertices[1].x),
-                this.y(this.mesh.vertices[1].y));
-        console.log(
-                this.x(this.mesh.vertices[2].x),
-                this.y(this.mesh.vertices[2].y));
         console.log('mesh updated');
-        console.dir(this.mesh.vertices);
     }
 
     private resizeTimeout: number;
