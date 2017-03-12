@@ -27,7 +27,8 @@ gulp.task('server', () => {
     return plugins.connect.server({
         root: '.',
         livereload: true,
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        port: process.env.PORT || 8000
     });
 });
 

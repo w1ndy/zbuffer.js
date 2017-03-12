@@ -124,6 +124,6 @@ export function buildViewportMatrix(width: number, height: number): Mat4 {
     return new Mat4(
         0.5 * width, 0, 0, 0.5 * width,
         0, 0.5 * height, 0, 0.5 * height,
-        0, 0, 1, 0
+        0, 0, 1, 0,
         0, 0, 0, 1);
 }
